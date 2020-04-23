@@ -56,7 +56,8 @@ def main():
             print >> f, "#SBATCH --output=res.txt"
             print >> f, "#"
             print >> f, "#SBATCH --ntasks-per-node="+str(num_core_per_node)
-            print >> f, "#SBATCH --time=1000:00:00"
+            #print >> f, "#SBATCH --time=1000:00:00"
+            print >> f, "#SBATCH --time=10:00:00"
             print >> f, "#SBATCH --nodes="+str(max_num_node)
         elif scheduler == "sge":
             print >> f, "#$ -j y"

@@ -60,19 +60,26 @@ if [ "$config_file" = "" ]; then
 	exit 1
 fi
 
-collectives=$(cat $config_file | grep "collectives")
+# TJN: Avoid picking up lines elsewhere in config file that
+#      might contain 'collectives', e.g., in paths.
+collectives=$(cat $config_file | grep "collectives.*:")
 collectives=$(cut -d ":" -f 2 <<< "$collectives")
 work_dir=$(dirname "$0")
 
 if [ $with_slurm = true ]; then
+	echo "CMD: python coltune_script.py $config_file slurm"
 	python coltune_script.py $config_file slurm
+
 	if [ $? -ne 0 ]; then
 		echo "Failed to create job scripts. Exiting.."
 		exit 1;
 	fi
+
 	for collective in ${collectives// / } ; do
+		echo "CMD: sbatch -W $work_dir/output/$collective/${collective}_coltune.sh"
 		sbatch -W $work_dir/output/$collective/${collective}_coltune.sh
 	done
+	echo "CMD: python coltune_analyze.py $config_file"
 	python coltune_analyze.py $config_file
 else
 	python coltune_script.py $config_file sge
@@ -89,3 +96,4 @@ else
 fi
 
 exit
+
