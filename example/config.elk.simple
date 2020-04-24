@@ -4,4 +4,4 @@ imb_binary : /home/3t4/projects/ompi-x/perf-collectives/IMB/mpi-benchmarks/IMB-M
 number_of_ranks : 2 4
 max_num_node : 2
 number_of_cores_per_node : 4
-number_of_runs_per_test : 1
+number_of_runs_per_test : 2

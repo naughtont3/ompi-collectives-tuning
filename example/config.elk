@@ -2,6 +2,6 @@ collectives : allgather allgatherv allreduce alltoall alltoallv barrier bcast ga
 omb_collective_directory : /home/3t4/projects/ompi-x/perf-collectives/OSU/install/libexec/osu-micro-benchmarks/mpi/collective
 imb_binary : /home/3t4/projects/ompi-x/perf-collectives/IMB/mpi-benchmarks/IMB-MPI1
 number_of_ranks : 2 4 8 16 32 64
-max_num_node : 8
+max_num_node : 64
 number_of_cores_per_node : 8
 number_of_runs_per_test : 3
