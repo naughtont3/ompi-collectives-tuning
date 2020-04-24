@@ -1,6 +1,7 @@
 #!/bin/bash
 # Copyright (c) 2020      Amazon.com, Inc. or its affiliates.  All Rights
 #                         reserved.
+# Copyright (c) 2020      UT-Battelle, LLC. All rights reserved.
 #
 # $COPYRIGHT$
 #
@@ -12,6 +13,7 @@
 numcoll=0
 config_file=""
 with_slurm=false
+with_lsf=false
 
 usage()
 {
@@ -23,11 +25,12 @@ Options:
 		   --config-file (string)
 			The file containing global configurations.
 		   --with-slurm
-			Use slurm instead of the default SGE." 1>&2; exit 1;
+		   --with-lsf
+			Use slurm or lsf instead of the default SGE." 1>&2; exit 1;
 
 }
 
-OPTIONS=$(getopt -o :c: --long with-slurm,config-file: -- "$@")
+OPTIONS=$(getopt -o :c: --long with-slurm,with-lsf,config-file: -- "$@")
 
 if [[ $? -ne 0 ]]; then
         usage
@@ -45,6 +48,10 @@ while true; do
 			;;
 		'--with-slurm')
 			with_slurm=true
+			shift
+			;;
+		'--with-lsf')
+			with_lsf=true
 			shift
 			;;
                 '--')
@@ -73,6 +80,25 @@ if [ $with_slurm = true ]; then
 	for collective in ${collectives// / } ; do
 		sbatch -W $work_dir/output/$collective/${collective}_coltune.sh
 	done
+	python coltune_analyze.py $config_file
+elif [ $with_lsf = true ]; then
+	echo "CMD: python coltune_script.py $config_file lsf"
+	python coltune_script.py $config_file lsf
+
+	if [ $? -ne 0 ]; then
+		echo "Failed to create job scripts. Exiting.."
+		exit 1;
+	fi
+
+	for collective in ${collectives// / } ; do
+        job_name="$collective"
+        proj_acct="STF010"
+		echo "CMD: bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh"
+		bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh
+        echo "CMD: bwait -w \"ended($job_name)\""
+        bwait -w "ended($job_name)"
+	done
+	echo "CMD: python coltune_analyze.py $config_file"
 	python coltune_analyze.py $config_file
 else
 	python coltune_script.py $config_file sge
