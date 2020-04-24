@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Copyright (c) 2020      Amazon.com, Inc. or its affiliates.  All Rights
 #                         reserved.
+# Copyright (c) 2020      UT-Battelle, LLC. All rights reserved.
 #
 # $COPYRIGHT$
 #
@@ -59,6 +60,16 @@ def main():
             #print >> f, "#SBATCH --time=1000:00:00"
             print >> f, "#SBATCH --time=10:00:00"
             print >> f, "#SBATCH --nodes="+str(max_num_node)
+        elif scheduler == "lsf":
+            print >> f, "#BSUB   -J "+collective
+            print >> f, "#BSUB   -o res.txt"
+            print >> f, "#BSUB   -e res.txt"
+            print >> f, "#"
+            # TODO TJN: Get bsub equiv of '--ntasks-per-node'
+            print >> f, "#BSUB   --ntasks-per-node="+str(num_core_per_node)
+            print >> f, "#BSUB   -W 00:60:00"
+            print >> f, "#BSUB   -nnodes="+str(max_num_node)
+            print >> f, "#BSUB   -alloc_flags \"gumps smt1\""
         elif scheduler == "sge":
             print >> f, "#$ -j y"
             print >> f, "#$ -pe mpi %d" % (max_num_node * num_core_per_node)
