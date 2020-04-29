@@ -67,7 +67,9 @@ if [ "$config_file" = "" ]; then
 	exit 1
 fi
 
-collectives=$(cat $config_file | grep "collectives")
+# TJN: Avoid picking up lines elsewhere in config file that
+#      might contain 'collectives', e.g., in paths.
+collectives=$(cat $config_file | grep "collectives.*:")
 collectives=$(cut -d ":" -f 2 <<< "$collectives")
 work_dir=$(dirname "$0")
 
@@ -92,7 +94,7 @@ elif [ $with_lsf = true ]; then
 
 	for collective in ${collectives// / } ; do
         job_name="$collective"
-        proj_acct="STF010"
+        proj_acct="XXX"   # XXX: Modify for your Account/ProjectID
 		echo "CMD: bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh"
 		bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh
         echo "CMD: bwait -w \"ended($job_name)\""
