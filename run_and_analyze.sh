@@ -74,6 +74,7 @@ collectives=$(cut -d ":" -f 2 <<< "$collectives")
 work_dir=$(dirname "$0")
 
 if [ $with_slurm = true ]; then
+	echo "CMD: python coltune_script.py $config_file slurm"
 	python coltune_script.py $config_file slurm
 	if [ $? -ne 0 ]; then
 		echo "Failed to create job scripts. Exiting.."
@@ -96,9 +97,9 @@ elif [ $with_lsf = true ]; then
         job_name="$collective"
         proj_acct="XXX"   # XXX: Modify for your Account/ProjectID
 		echo "CMD: bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh"
-		bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh
-        echo "CMD: bwait -w \"ended($job_name)\""
-        bwait -w "ended($job_name)"
+	    bsub -P $proj_acct $work_dir/output/$collective/${collective}_coltune.sh
+		echo "CMD: bwait -w \"ended($job_name)\""
+	    bwait -w "ended($job_name)"
 	done
 	echo "CMD: python coltune_analyze.py $config_file"
 	python coltune_analyze.py $config_file

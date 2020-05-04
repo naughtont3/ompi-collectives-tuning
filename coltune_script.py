@@ -60,15 +60,12 @@ def main():
             print >> f, "#SBATCH --time=1000:00:00"
             print >> f, "#SBATCH --nodes="+str(max_num_node)
         elif scheduler == "lsf":
+            # TJN: Using mpirun for mapping b/c we allocate all of node w/ LSF
             print >> f, "#BSUB   -J "+collective
-            print >> f, "#BSUB   -o res.txt"
-            print >> f, "#BSUB   -e res.txt"
-            print >> f, "#"
-            # TODO TJN: Get bsub equiv of '--ntasks-per-node'
-            print >> f, "#BSUB   --ntasks-per-node="+str(num_core_per_node)
-            print >> f, "#BSUB   -W 00:60:00"
-            print >> f, "#BSUB   -nnodes="+str(max_num_node)
-            print >> f, "#BSUB   -alloc_flags \"gumps smt1\""
+            print >> f, "#BSUB   -o res.txt.%J"
+            print >> f, "#BSUB   -e res.txt.%J"
+            print >> f, "#BSUB   -W 2:00"
+            print >> f, "#BSUB   -nnodes "+str(max_num_node)
         elif scheduler == "sge":
             print >> f, "#$ -j y"
             print >> f, "#$ -pe mpi %d" % (max_num_node * num_core_per_node)
@@ -81,7 +78,25 @@ def main():
             sys.exit()
 
         print >> f, ""
- 
+
+        # TJN: Add our modules/environment setup
+        print >> f, "module unload spectrum-mpi xalt darshan-runtime"
+        print >> f, "module load gcc/6.4.0"
+        print >> f, "module load cuda/10.1.243"
+
+        # TJN: On PEAK we use DEVELOP area and 'openmpi/master_tjn'
+        #      On SUMMIT we would use (PROD) and 'openmpi/master'
+        # PEAK
+        print >> f, "module use /sw/summit/ums/ompix/DEVELOP/gcc/6.4.0/modules"
+        print >> f, "module load ucx/1.7.0"
+        print >> f, "module load openmpi/master_tjn"
+        # SUMMIT
+        #print >> f, "module use /sw/summit/ums/ompix/gcc/6.4.0/modules"
+        #print >> f, "module load ucx/1.7.0"
+        #print >> f, "module load openmpi/master"
+
+        print >> f, ""
+
         for num_rank in num_rank_list:
             for alg in range(num_alg+1):
                 if alg in exclude_alg or (alg == two_proc_alg and num_rank > 2):
@@ -93,6 +108,7 @@ def main():
                     else:
                         prg_name = omb_path+"/osu_"+collective
                     cmd = "mpirun --np %d " % (num_rank)
+                    cmd += "--map-by ppr:"+num_core_per_node+":node --map-by core"
                     cmd += "--mca coll_tuned_use_dynamic_rules 1 --mca coll_tuned_"+collective+"_algorithm "+str(alg)
                     cmd += " " + prg_name
                     cmd += " >& " + dir_path+"/output/"+collective + "/" + str(alg) + "_" + str(num_rank) + "ranks" + "_run" + str(run_id) + ".out"
