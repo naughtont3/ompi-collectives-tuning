@@ -87,13 +87,13 @@ def main():
         # TJN: On PEAK we use DEVELOP area and 'openmpi/master_tjn'
         #      On SUMMIT we would use (PROD) and 'openmpi/master'
         # PEAK
-        print >> f, "module use /sw/summit/ums/ompix/DEVELOP/gcc/6.4.0/modules"
-        print >> f, "module load ucx/1.7.0"
-        print >> f, "module load openmpi/master_tjn"
-        # SUMMIT
-        #print >> f, "module use /sw/summit/ums/ompix/gcc/6.4.0/modules"
+        #print >> f, "module use /sw/summit/ums/ompix/DEVELOP/gcc/6.4.0/modules"
         #print >> f, "module load ucx/1.7.0"
-        #print >> f, "module load openmpi/master"
+        #print >> f, "module load openmpi/master_tjn"
+        # SUMMIT
+        print >> f, "module use /sw/summit/ums/ompix/gcc/6.4.0/modules"
+        print >> f, "module load ucx/1.7.0"
+        print >> f, "module load openmpi/master"
 
         print >> f, ""
 
