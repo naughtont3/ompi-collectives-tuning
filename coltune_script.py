@@ -108,7 +108,7 @@ def main():
                     else:
                         prg_name = omb_path+"/osu_"+collective
                     cmd = "mpirun --np %d " % (num_rank)
-                    cmd += "--map-by ppr:"+num_core_per_node+":node --map-by core"
+                    cmd += "--map-by ppr:" + str(num_core_per_node) + ":node --map-by core "
                     cmd += "--mca coll_tuned_use_dynamic_rules 1 --mca coll_tuned_"+collective+"_algorithm "+str(alg)
                     cmd += " " + prg_name
                     cmd += " >& " + dir_path+"/output/"+collective + "/" + str(alg) + "_" + str(num_rank) + "ranks" + "_run" + str(run_id) + ".out"
