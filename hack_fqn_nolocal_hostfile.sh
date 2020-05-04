@@ -9,17 +9,28 @@
 # We go ahead and add the FQDN stuff to ensure we do not have any problems
 # with the node-to-node SSH'ing.  Was problem in past, but may be fixed now.
 #
+# Usage:
+#    ./script  IN_HOSTFILE  OUT_HOSTFILE
+###
 
-if [ "x$LSB_DJOB_HOSTFILE" = "x" ] ; then
-    echo "ERROR: Missing environment variable 'LSB_DJOB_HOSTFILE'"
+INFILE=$1
+OUTFILE=$2
+
+if [ ! -f "$INFILE" ] ; then
+    echo "ERROR: Missing arg input file '$INFILE'"
+    exit 1
+fi
+
+if [ "x$OUTFILE" = "x" ] ; then
+    echo "ERROR: Missing arg output file '$OUTFILE'"
     exit 1
 fi
 
 ###
 # XXX: Remove 1st line (batch-node) from list of compute nodes
-# using 'tail +2' due to broken '--nolocal' (or :NOLOCAL) option.
+# using tail due to broken '--nolocal' (or :NOLOCAL) option.
 ###
-# Setup FQDN hostfile for node-to-node ssh
-export MY_FQDN_HOSTFILE=$BASE_DIR/fqdn-hostfile.$$
-cat $LSB_DJOB_HOSTFILE |tail +2 | sed 's/$/.summit.olcf.ornl.gov/' > $MY_FQDN_HOSTFILE
+nlines=$(wc -l $INFILE | awk '{print $1}')
+keep_nlines=$(expr $nlines - 1)
+cat $INFILE |tail -$keep_nlines | sed 's/$/.summit.olcf.ornl.gov/' > $OUTFILE
 

@@ -98,7 +98,8 @@ def main():
         print >> f, ""
 
         print >> f, "# TJN: HACK avoid problems with broken --nolocal/:NOLOCAL"
-        print >> f, "/gpfs/alpine/stf010/proj-shared/naughton/peak/ompix/perf-colltune/ompi-collectives-tuninghack_fqn_nolocal_hostfile.sh"
+        print >> f, "export MY_HOSTFILE=/tmp/my-hostfile.$$"
+        print >> f, "/gpfs/alpine/stf010/proj-shared/naughton/peak/ompix/perf-colltune/ompi-collectives-tuning/hack_fqn_nolocal_hostfile.sh $LSB_DJOB_HOSTFILE  $MY_HOSTFILE"
 
         print >> f, ""
 
@@ -113,7 +114,8 @@ def main():
                     else:
                         prg_name = omb_path+"/osu_"+collective
                     cmd = "mpirun --np %d " % (num_rank)
-                    cmd += "--hostfile $MY_FQDN_HOSTFILE --nolocal "
+                    #cmd += "--hostfile $LSB_DJOB_HOSTFILE --nolocal "
+                    cmd += "--hostfile $MY_HOSTFILE "
                     cmd += "--map-by ppr:" + str(num_core_per_node) + ":node --map-by core "
                     cmd += "--mca coll_tuned_use_dynamic_rules 1 --mca coll_tuned_"+collective+"_algorithm "+str(alg)
                     cmd += " " + prg_name
@@ -124,7 +126,7 @@ def main():
         print >> f, ""
 
         print >> f, "# TJN: HACK avoid problems with broken --nolocal/:NOLOCAL"
-        print >> f, "rm -f $MY_FQDN_HOSTFILE"
+        print >> f, "rm -f $MY_HOSTFILE"
 
         print >> f, ""
 
