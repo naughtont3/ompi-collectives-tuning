@@ -97,6 +97,11 @@ def main():
 
         print >> f, ""
 
+        print >> f, "# TJN: HACK avoid problems with broken --nolocal/:NOLOCAL"
+        print >> f, "/gpfs/alpine/stf010/proj-shared/naughton/peak/ompix/perf-colltune/ompi-collectives-tuninghack_fqn_nolocal_hostfile.sh"
+
+        print >> f, ""
+
         for num_rank in num_rank_list:
             for alg in range(num_alg+1):
                 if alg in exclude_alg or (alg == two_proc_alg and num_rank > 2):
@@ -108,12 +113,20 @@ def main():
                     else:
                         prg_name = omb_path+"/osu_"+collective
                     cmd = "mpirun --np %d " % (num_rank)
+                    cmd += "--hostfile $MY_FQDN_HOSTFILE --nolocal "
                     cmd += "--map-by ppr:" + str(num_core_per_node) + ":node --map-by core "
                     cmd += "--mca coll_tuned_use_dynamic_rules 1 --mca coll_tuned_"+collective+"_algorithm "+str(alg)
                     cmd += " " + prg_name
                     cmd += " >& " + dir_path+"/output/"+collective + "/" + str(alg) + "_" + str(num_rank) + "ranks" + "_run" + str(run_id) + ".out"
                     print >> f, cmd
                 print >> f, ""
+
+        print >> f, ""
+
+        print >> f, "# TJN: HACK avoid problems with broken --nolocal/:NOLOCAL"
+        print >> f, "rm -f $MY_FQDN_HOSTFILE"
+
+        print >> f, ""
 
         f.close()
         print "SGE script wrote to "+collective+"_coltune.sh successfully!"
