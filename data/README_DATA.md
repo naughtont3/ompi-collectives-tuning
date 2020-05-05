@@ -3,6 +3,8 @@ README
 
  - System: "PEAK" (summit devel system)
  - Date: 2020.05.04
+ - UPDATE: 2020.05.05 -- "round2" rerun of select items that had errors, see
+                         Notes area at end of this file for further details.
 
 Software Versions
 ----------------
@@ -59,6 +61,25 @@ Other Notes
       UCX_MAX_RNDV_RAILS=2
       UCX_NET_DEVICES=mlx5_0:1,mlx5_3:1
     ```
+
+ - NOTE: "round2" There were several cases that failed on the inital runs,
+   most look to be due to lack of walltime.  So I am resubmitting that
+   subset based on a revised set of run config files,
+    - examples/config.peak.round2-allgather
+    - examples/config.peak.round2-allgatherv-alltoall
+    - examples/config.peak.round2-reduce_scatter_block
+
+   This relates to errors for the following items in the 2020.05.04 data
+   tarball.
+     - allgather
+        - ran out of time it appears at/after 0_128ranks_run0.out
+     - allgatherv
+        - ran out of time it appears at/after 1_512ranks_run2.out
+     - alltoall
+        - ran out of time it appears at/after 1_512ranks_run0.out
+     - reduce_scatter_block
+        - all seem to fail w/ some library path/error?
+
 
 Acks for Systems/Projects
 -------------------------
