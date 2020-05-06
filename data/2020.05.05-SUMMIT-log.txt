@@ -1,0 +1,96 @@
+
+UCX_DIR=/sw/summit/ums/ompix/gcc/6.4.0/install/ucx-1.7.0
+UCX_INSTALL_DIR=/sw/summit/ums/ompix/gcc/6.4.0/install/ucx-1.7.0
+UCX_MAX_RNDV_RAILS=2
+UCX_NET_DEVICES=mlx5_0:1,mlx5_3:1
+login1:$ env | grep MCA
+PRRTE_MCA_rmaps_base_no_schedule_local=1
+PRRTE_MCA_routed=direct
+OMPI_MCA_io=romio321
+
+
+
+login1:$ more example/config.summit.ppn42                                       
+collectives : allgather allgatherv allreduce alltoall alltoallv barrier bcast ga
+ther reduce reduce_scatter_block reduce_scatter scatter                         
+omb_collective_directory : /gpfs/alpine/stf010/proj-shared/naughton/summit/ompix
+/perf-colltune/OSU/osu-micro-benchmarks-5.6.2/_install/libexec/osu-micro-benchma
+rks/mpi/collective/                                                             
+imb_binary : /gpfs/alpine/stf010/proj-shared/naughton/summit/ompix/perf-colltune
+/IMB/mpi-benchmarks/IMB-MPI1                                                    
+number_of_ranks : 2 4 8 16 32 64 128 256 512 1024 2048                          
+max_num_node : 49                                                               
+number_of_cores_per_node : 42                                                   
+number_of_runs_per_test : 2                                                     
+login1:$ ./run_and_analyze.sh -c example/config.summit.ppn42 --with-lsf         
+CMD: python coltune_script.py example/config.summit.ppn42 lsf                   
+SGE script wrote to allgather_coltune.sh successfully!                          
+SGE script wrote to allgatherv_coltune.sh successfully!                         
+No two proc algorithm for allreduce                                             
+SGE script wrote to allreduce_coltune.sh successfully!                          
+SGE script wrote to alltoall_coltune.sh successfully!                           
+No two proc algorithm for alltoallv                                             
+SGE script wrote to alltoallv_coltune.sh successfully!                          
+SGE script wrote to barrier_coltune.sh successfully!                            
+No two proc algorithm for bcast                                                 
+SGE script wrote to bcast_coltune.sh successfully!                              
+No two proc algorithm for gather                                                
+SGE script wrote to gather_coltune.sh successfully!                             
+No two proc algorithm for reduce                                                
+SGE script wrote to reduce_coltune.sh successfully!                             
+No two proc algorithm for reduce_scatter_block                                  
+SGE script wrote to reduce_scatter_block_coltune.sh successfully!               
+No two proc algorithm for reduce_scatter                                        
+SGE script wrote to reduce_scatter_coltune.sh successfully!                     
+No two proc algorithm for scatter 
+SGE script wrote to scatter_coltune.sh successfully!
+CMD: bsub -P STF010 ./output/allgather/allgather_coltune.sh
+Job <73785> is submitted to default queue <batch>.
+CMD: bwait -w "ended(allgather)"
+ended(allgather): Wait condition satisfied
+CMD: bsub -P STF010 ./output/allgatherv/allgatherv_coltune.sh
+Job <74817> is submitted to default queue <batch>.
+CMD: bwait -w "ended(allgatherv)"
+ended(allgatherv): Wait condition satisfied
+CMD: bsub -P STF010 ./output/allreduce/allreduce_coltune.sh
+Job <75050> is submitted to default queue <batch>.
+CMD: bwait -w "ended(allreduce)"
+ended(allreduce): Wait condition satisfied
+CMD: bsub -P STF010 ./output/alltoall/alltoall_coltune.sh
+Job <75728> is submitted to default queue <batch>.
+CMD: bwait -w "ended(alltoall)"
+ended(alltoall): Wait condition satisfied
+CMD: bsub -P STF010 ./output/alltoallv/alltoallv_coltune.sh
+Job <76317> is submitted to default queue <batch>.
+CMD: bwait -w "ended(alltoallv)"
+ended(alltoallv): Wait condition satisfied
+CMD: bsub -P STF010 ./output/barrier/barrier_coltune.sh
+Job <77617> is submitted to default queue <batch>.
+CMD: bwait -w "ended(barrier)"
+ended(barrier): Wait condition satisfied
+CMD: bsub -P STF010 ./output/bcast/bcast_coltune.sh
+Job <77655> is submitted to default queue <batch>.
+CMD: bwait -w "ended(bcast)"
+ended(bcast): Wait condition satisfied
+CMD: bsub -P STF010 ./output/gather/gather_coltune.sh
+Job <77815> is submitted to default queue <batch>.
+CMD: bwait -w "ended(gather)"
+ended(gather): Wait condition satisfied
+CMD: bsub -P STF010 ./output/reduce/reduce_coltune.sh
+Job <77827> is submitted to default queue <batch>.
+CMD: bwait -w "ended(reduce)"
+ended(reduce): Wait condition satisfied
+CMD: bsub -P STF010 ./output/reduce_scatter_block/reduce_scatter_block_coltune.sh
+Job <77959> is submitted to default queue <batch>.
+CMD: bwait -w "ended(reduce_scatter_block)"
+ended(reduce_scatter_block): Wait condition satisfied
+CMD: bsub -P STF010 ./output/reduce_scatter/reduce_scatter_coltune.sh
+Job <78256> is submitted to default queue <batch>.
+CMD: bwait -w "ended(reduce_scatter)"
+ended(reduce_scatter): Wait condition satisfied
+CMD: bsub -P STF010 ./output/scatter/scatter_coltune.sh
+Job <78279> is submitted to default queue <batch>.
+CMD: bwait -w "ended(scatter)"
+ended(scatter): Wait condition satisfied
+CMD: python coltune_analyze.py example/config.summit.ppn42
+Error parsing /gpfs/alpine/stf010/proj-shared/naughton/summit/ompix/perf-colltune/ompi-collectives-tuning/output/allgather/4_1024ranks_run0.out. Data format doesn't match. Exiting..
