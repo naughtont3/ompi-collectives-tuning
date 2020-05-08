@@ -1,3 +1,10 @@
+SUMMARY
+------
+
+ - UPDATE: 2020.05.08 Use 'PEAK.coltune.tar.gz'  That has full dataset for
+   tests on PEAK and similar note as this for setup details.
+
+
 README
 ------
 
