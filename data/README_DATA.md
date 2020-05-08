@@ -80,6 +80,25 @@ Other Notes
      - reduce_scatter_block
         - all seem to fail w/ some library path/error?
 
+ - NOTE: "round3" There were still a view runs that did not complete in time
+   during the "round2" re-test.  I am submitting **just** that subset
+   and will add them to the other results from "round3".
+   I will just hack the run script and resubmit this limited set of jobs.
+
+   This relates to the following, which will be rerun in "round3":
+    - allgatherv
+        - 4_512ranks_run1.out
+        - 4_512ranks_run2.out
+
+    - alltoall
+        - 3_512ranks_run2.out
+        - 4_512ranks_run0.out
+        - 4_512ranks_run1.out
+        - 4_512ranks_run2.out
+
+    I will likely just skip 'reduce_scatter_block' for now, b/c
+    all of of the tests failed again, but for some compile/lib reason.
+
 
 Acks for Systems/Projects
 -------------------------
