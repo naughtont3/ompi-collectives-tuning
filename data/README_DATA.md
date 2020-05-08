@@ -101,6 +101,11 @@ Other Notes
     I will likely just skip 'reduce_scatter_block' for now, b/c
     all of of the tests failed again, but for some compile/lib reason.
 
+   The "round3" (2020.05.07-PEAK-round3.output.tar.gz) data
+   is for a few dangling items from round2.  So these few files
+   should be added to the round2 data output to have a full
+   set of data for the given config files.
+
 
 Acks for Systems/Projects
 -------------------------
