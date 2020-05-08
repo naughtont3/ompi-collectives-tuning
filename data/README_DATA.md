@@ -5,6 +5,8 @@ README
  - Date: 2020.05.04
  - UPDATE: 2020.05.05 -- "round2" rerun of select items that had errors, see
                          Notes area at end of this file for further details.
+ - UPDATE: 2020.05.07 -- "round3" rerun of a few from "round2" that did not
+                         complete.  See Notes are for further details.
 
 Software Versions
 ----------------
