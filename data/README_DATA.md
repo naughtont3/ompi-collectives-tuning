@@ -5,6 +5,8 @@ README
  - Date: 2020.05.05
  - UPDATE: 2020.05.08 - TJN:  "round2" rerun of select items that had
         errors, see Notes area at end of this file for further details.
+ - UPDATE: 2020.05.11 - TJN:  "round3" rerun of select items that had
+        errors in 'round2', see SUMMIT-round3.sh comments
 
 Software Versions
 ----------------
