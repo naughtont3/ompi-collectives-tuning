@@ -14,7 +14,7 @@ bwait -w "ended(alltoall)"
 bsub -P STF010 ./output/alltoallv/alltoallv_coltune.sh
 bwait -w "ended(alltoallv)"
 
-# TODO
+# TODO (rerun all w/ LD_LIBRARY_PATH hacks)
 bsub -P STF010 ./output/reduce_scatter_block/reduce_scatter_block_coltune.sh
 bwait -w "ended(reduce_scatter_block)"
 
