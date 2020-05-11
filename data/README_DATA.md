@@ -3,6 +3,8 @@ README
 
  - System: "Summit"
  - Date: 2020.05.05
+ - UPDATE: 2020.05.08 - TJN:  "round2" rerun of select items that had
+        errors, see Notes area at end of this file for further details.
 
 Software Versions
 ----------------
@@ -69,6 +71,11 @@ Other Notes
 	 UCX_MAX_RNDV_RAILS=2
 	 UCX_NET_DEVICES=mlx5_0:1,mlx5_3:1
     ```
+
+ - NOTE: "round2" There were several cases that failed on the inital runs,
+   most look to be due to lack of walltime. So I am resubmitting that subset
+   using a custom script to rerun just those cases.
+
 
 Acks for Systems/Projects
 -------------------------
