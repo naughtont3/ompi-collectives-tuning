@@ -1,4 +1,4 @@
-collectives : allgather allreduce alltoallv barrier bcast gather reduce reduce_scatter scatter reduce_scatter_block 
+collectives : allgather allreduce alltoallv barrier bcast gather reduce reduce_scatter scatter
 omb_collective_directory : /gpfs/alpine/stf010/proj-shared/naughton/summit/ompix/perf-colltune/OSU/osu-micro-benchmarks-5.6.2/_install/libexec/osu-micro-benchmarks/mpi/collective/
 imb_binary : /gpfs/alpine/stf010/proj-shared/naughton/summit/ompix/perf-colltune/IMB/mpi-benchmarks/IMB-MPI1
 number_of_ranks : 2 4 8 16 32 64 128 256 512 1024 2048

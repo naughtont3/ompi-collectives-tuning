@@ -1,3 +1,11 @@
+SUMMARY
+-------
+
+ - UPDATE: 2020.05.12 Use 'SUMMIT.coltune.tar.gz'
+ - That has full dataset for tests on SUMMIT (that completed) and similar note as this for setup details.
+
+
+
 README
 ------
 
@@ -7,6 +15,15 @@ README
         errors, see Notes area at end of this file for further details.
  - UPDATE: 2020.05.11 - TJN:  "round3" rerun of select items that had
         errors in 'round2', see SUMMIT-round3.sh comments
+
+ - UPDATE: 2020.05.12 - TJN: Created 3 config files to summarize
+        the results of all rounds that passed (few tests did not finish full 2048 yet).
+        And the reduce_scatter_block had total error, no data.
+
+        So for final runs with SUMMIT DATA use:
+        	- example/config.summit.ppn42.round3-1024max
+            - example/config.summit.ppn42.round3-2048max
+            - example/config.summit.ppn42.round3-reduce_scatter_block (FAILS)
 
 Software Versions
 ----------------
@@ -78,6 +95,21 @@ Other Notes
    most look to be due to lack of walltime. So I am resubmitting that subset
    using a custom script to rerun just those cases.
 
+ - UPDATE: "round3" 2020.05.12 - TJN: Created 3 config files to summarize
+        the results of all runs that passed (few tests did not finish full 2048 yet).
+        And the reduce_scatter_block had total error, no data.
+
+        So for final runs with SUMMIT DATA use:
+        ```
+             # 1024 max ranks tests
+            python coltune_analyze.py example/config.summit.ppn42.round3-1024max
+
+             # 2048 max ranks tests
+            python coltune_analyze.py example/config.summit.ppn42.round3-2048max
+
+              # This fails
+            python coltune_analyze.py example/config.summit.ppn42.round3-reduce_scatter_block
+        ```
 
 Acks for Systems/Projects
 -------------------------
