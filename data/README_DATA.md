@@ -1,9 +1,11 @@
 SUMMARY
 ------
 
+ - UPDATE: 2020.05.19 Rerun with PR #7730.
+    - See "README_DATA.pr7730.md"
+
  - UPDATE: 2020.05.08 Use 'PEAK.coltune.tar.gz'  That has full dataset for
    tests on PEAK and similar note as this for setup details.
-
 
 README
 ------
@@ -14,6 +16,7 @@ README
                          Notes area at end of this file for further details.
  - UPDATE: 2020.05.07 -- "round3" rerun of a few from "round2" that did not
                          complete.  See Notes are for further details.
+
 
 Software Versions
 ----------------

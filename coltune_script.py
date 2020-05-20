@@ -89,7 +89,8 @@ def main():
         # PEAK
         print >> f, "module use /sw/summit/ums/ompix/DEVELOP/gcc/6.4.0/modules"
         print >> f, "module load ucx/1.7.0"
-        print >> f, "module load openmpi/master_tjn"
+        #print >> f, "module load openmpi/master_tjn"
+        print >> f, "module load openmpi/master_pr7730"
         # SUMMIT
         #print >> f, "module use /sw/summit/ums/ompix/gcc/6.4.0/modules"
         #print >> f, "module load ucx/1.7.0"
