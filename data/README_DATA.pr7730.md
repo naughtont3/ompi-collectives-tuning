@@ -1,14 +1,13 @@
 SUMMARY
 ------
-
- - UPDATE: 2020.05.19 Rerun with PR #7730.
+ - UPDATE: 2020.05.26 Rerun w/ PR #7730 (and correct ompi module :-))
 
 README
 ------
 
  - System: "PEAK" (summit devel system)
  - Date: 2020.05.20
- - UPDATE: 2020.05.19 Rerun with PR #7730. (this will be "pr7730" and later
+ - UPDATE: 2020.05.26 Rerun with PR #7730. (this will be "pr7730" and later
    reruns will be "pr7730.roundX".
 
 Software Versions
