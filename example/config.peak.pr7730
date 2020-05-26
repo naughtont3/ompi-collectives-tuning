@@ -1,0 +1,7 @@
+collectives : alltoall
+omb_collective_directory : /gpfs/alpine/stf010/proj-shared/naughton/peak/ompix/perf-colltune/OSU/osu-micro-benchmarks-5.6.2/_install/libexec/osu-micro-benchmarks/mpi/collective/
+imb_binary : /gpfs/alpine/stf010/proj-shared/naughton/peak/ompix/perf-colltune/IMB/mpi-benchmarks/IMB-MPI1
+number_of_ranks : 512
+max_num_node : 13
+number_of_cores_per_node : 42
+number_of_runs_per_test : 3
